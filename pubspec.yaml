@@ -1,0 +1,44 @@
+name: shopping_app
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  image_picker: ^0.8.4+1
+  shared_preferences: ^2.0.6
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/background.jpg
+    - assets/logo.png
+    - assets/banana.jpg
+    - assets/apple.jpg
+    - assets/tshirt.jpg
+    - assets/smartphone.jpg
+    - assets/shampoo.jpg
+    - assets/default_profile.png
+    - assets/rice.jpg
+    - assets/orange.jpg
+    - assets/olive_oil.jpg
+    - assets/mixer.jpg
+    - assets/laptop.jpg
+    - assets/jeans.jpg
+    - assets/face_cream.jpg
+    - assets/cookware.jpg
+
