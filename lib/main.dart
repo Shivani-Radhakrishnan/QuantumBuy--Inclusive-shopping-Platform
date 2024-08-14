@@ -12,10 +12,10 @@ import 'profile_screen.dart';
 import 'categories_screen.dart';
 import 'edit_profile_screen.dart';
 import 'checkout_screen.dart';
-import 'splash_screen.dart'; // Import your splash screen
+import 'splash_screen.dart';
+import 'voice_order_screen.dart';  // Import the VoiceOrderScreen
 
-void main()  {
-
+void main() {
   runApp(MyApp());
 }
 
@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           '/profile': (context) => ProfileScreen(),
           '/editProfile': (context) => EditProfileScreen(),
           '/checkout': (context) => CheckoutScreen(),
+          '/voice_order_screen': (context) => VoiceOrderScreen(),  // Route to VoiceOrderScreen
         },
       ),
     );

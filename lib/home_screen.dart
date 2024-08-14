@@ -10,11 +10,12 @@ class HomeScreen extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                    'assets/background.jpg'), // Add a background image
+                image: AssetImage('assets/background.jpg'), // Add a background image
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.2),
-                    BlendMode.darken), // Reduce opacity
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.2),
+                  BlendMode.darken,
+                ), // Reduce opacity
               ),
             ),
           ),
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               child: Icon(
                 Icons.person,
                 size: 40,
-                color: Colors.white.withOpacity(1), // Reduced opacity
+                color: Colors.white.withOpacity(0.8), // Increased opacity for better contrast
               ),
             ),
           ),
@@ -56,30 +57,62 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 250),
                 // Button for Categories List
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/categories');
-                  },
-                  icon: Icon(Icons.category),
-                  label: Text('Categories'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 237, 239, 244),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18),
+                Semantics(
+                  label: 'Navigate to Categories',
+                  child: Tooltip(
+                    message: 'Navigate to Categories',
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/categories');
+                      },
+                      icon: Icon(Icons.category),
+                      label: Text('Categories'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 237, 239, 244),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18), // High-contrast color
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 20),
                 // Button for Cart
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/cart');
-                  },
-                  icon: Icon(Icons.shopping_cart),
-                  label: Text('Cart'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 237, 239, 244),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18),
+                Semantics(
+                  label: 'Navigate to Cart',
+                  child: Tooltip(
+                    message: 'Navigate to Cart',
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cart');
+                      },
+                      icon: Icon(Icons.shopping_cart),
+                      label: Text('Cart'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 237, 239, 244),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18), // High-contrast color
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                // Button for Voice Order
+                Semantics(
+                  label: 'Order with Voice',
+                  child: Tooltip(
+                    message: 'Order with Voice',
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/voiceOrder');
+                      },
+                      icon: Icon(Icons.mic),
+                      label: Text('Voice Order'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 237, 239, 244),
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                        textStyle: TextStyle(fontSize: 18), // High-contrast color
+                      ),
+                    ),
                   ),
                 ),
               ],

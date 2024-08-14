@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'product_model.dart'; // Ensure this import statement is correct
 
 class CartModel extends ChangeNotifier {
-  List<Product> _items = [];
+  final List<Product> _items = [];
 
   List<Product> get items => _items;
 
@@ -51,4 +51,6 @@ class CartModel extends ChangeNotifier {
     _items.clear();
     notifyListeners();
   }
+
+  getProductByName(String productName) {}
 }

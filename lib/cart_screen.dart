@@ -4,11 +4,13 @@ import 'cart_model.dart';
 import 'product_model.dart';
 
 class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: const Text('Cart'),
       ),
       body: Consumer<CartModel>(
         builder: (context, cart, child) {
@@ -26,14 +28,14 @@ class CartScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.remove),
+                      icon: const Icon(Icons.remove),
                       onPressed: () {
                         Provider.of<CartModel>(context, listen: false).removeItem(product);
                       },
                     ),
                     Text('${product.quantity}x'),
                     IconButton(
-                      icon: Icon(Icons.add),
+                      icon: const Icon(Icons.add),
                       onPressed: () {
                         Provider.of<CartModel>(context, listen: false).addItem(product);
                       },
@@ -54,13 +56,13 @@ class CartScreen extends StatelessWidget {
               children: [
                 Text(
                   'Total: ₹${cart.getTotalCost().toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/checkout');
                   },
-                  child: Text('Checkout'),
+                  child: const Text('Checkout'),
                 ),
               ],
             ),

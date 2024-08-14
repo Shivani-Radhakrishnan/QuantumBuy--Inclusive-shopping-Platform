@@ -13,32 +13,119 @@ dependencies:
   provider: ^6.0.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  image_picker: ^0.8.4+1
+  image_picker: ^1.1.2
   shared_preferences: ^2.0.6
   cupertino_icons: ^1.0.6
+  flutter_tts: ^4.0.2
+  speech_to_text: ^6.6.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
   assets:
     - assets/background.jpg
     - assets/logo.png
-    - assets/banana.jpg
-    - assets/apple.jpg
-    - assets/tshirt.jpg
-    - assets/smartphone.jpg
-    - assets/shampoo.jpg
-    - assets/default_profile.png
-    - assets/rice.jpg
-    - assets/orange.jpg
-    - assets/olive_oil.jpg
-    - assets/mixer.jpg
-    - assets/laptop.jpg
-    - assets/jeans.jpg
-    - assets/face_cream.jpg
-    - assets/cookware.jpg
-
+    - assets/electronics/smartphone.jpg  
+    - assets/electronics/laptop.jpg  
+    - assets/electronics/smart_tv.jpg  
+    - assets/electronics/headphones.jpg  
+    - assets/electronics/camera.jpg  
+    - assets/electronics/smartwatch.jpg  
+    - assets/electronics/bluetooth_speaker.jpg  
+    - assets/electronics/tablet.jpg  
+    - assets/electronics/smart_thermostat.jpg  
+    - assets/electronics/external_hard_drive.jpg  
+    - assets/electronics/4k_monitor.jpg  
+    - assets/electronics/digital_camera.jpg  
+    - assets/electronics/game_console.jpg  
+    - assets/electronics/wireless_charger.jpg  
+    - assets/electronics/home_theater.jpg  
+    - assets/electronics/action_camera.jpg  
+    - assets/electronics/smart_doorbell.jpg  
+    - assets/electronics/digital_photo_frame.jpg  
+    - assets/electronics/projector.jpg  
+    - assets/electronics/electric_toothbrush.jpg  
+    - assets/clothing/tshirt.jpg  
+    - assets/clothing/jeans.jpg  
+    - assets/clothing/jacket.jpg  
+    - assets/clothing/sunglasses.jpg  
+    - assets/clothing/watch.jpg  
+    - assets/clothing/sneakers.jpg  
+    - assets/clothing/hat.jpg  
+    - assets/clothing/scarf.jpg  
+    - assets/clothing/sweater.jpg  
+    - assets/clothing/shorts.jpg  
+    - assets/clothing/blouse.jpg  
+    - assets/clothing/cardigan.jpg  
+    - assets/clothing/belt.jpg  
+    - assets/clothing/dress.jpg  
+    - assets/clothing/socks.jpg  
+    - assets/clothing/gloves.jpg  
+    - assets/clothing/tie.jpg  
+    - assets/clothing/raincoat.jpg  
+    - assets/clothing/pants.jpg  
+    - assets/clothing/overalls.jpg  
+    - assets/home_kitchen/mixer.jpg  
+    - assets/home_kitchen/cookware.jpg  
+    - assets/home_kitchen/vacuum_cleaner.jpg  
+    - assets/home_kitchen/refrigerator.jpg  
+    - assets/home_kitchen/microwave.jpg  
+    - assets/home_kitchen/blender.jpg  
+    - assets/home_kitchen/toaster.jpg  
+    - assets/home_kitchen/coffee_maker.jpg  
+    - assets/home_kitchen/electric_kettle.jpg  
+    - assets/home_kitchen/dishwasher.jpg  
+    - assets/home_kitchen/air_purifier.jpg  
+    - assets/home_kitchen/cooktop.jpg  
+    - assets/home_kitchen/oven.jpg  
+    - assets/home_kitchen/washing_machine.jpg  
+    - assets/home_kitchen/deep_fryer.jpg  
+    - assets/home_kitchen/slow_cooker.jpg  
+    - assets/home_kitchen/juicer.jpg  
+    - assets/home_kitchen/rice_cooker.jpg  
+    - assets/home_kitchen/stand_mixer.jpg  
+    - assets/home_kitchen/induction_cooker.jpg  
+    - assets/beauty_personal_care/shampoo.jpg  
+    - assets/beauty_personal_care/face_cream.jpg  
+    - assets/beauty_personal_care/perfume.jpg  
+    - assets/beauty_personal_care/lipstick.jpg  
+    - assets/beauty_personal_care/hair_dryer.jpg  
+    - assets/beauty_personal_care/body_lotion.jpg  
+    - assets/beauty_personal_care/face_wash.jpg  
+    - assets/beauty_personal_care/eye_cream.jpg  
+    - assets/beauty_personal_care/nail_polish.jpg  
+    - assets/beauty_personal_care/sunscreen.jpg  
+    - assets/beauty_personal_care/deodorant.jpg  
+    - assets/beauty_personal_care/hand_cream.jpg  
+    - assets/beauty_personal_care/face_mask.jpg  
+    - assets/beauty_personal_care/hair_serum.jpg  
+    - assets/beauty_personal_care/makeup_remover.jpg  
+    - assets/beauty_personal_care/eyebrow_pencil.jpg  
+    - assets/beauty_personal_care/body_scrub.jpg  
+    - assets/beauty_personal_care/face_toner.jpg  
+    - assets/beauty_personal_care/hair_brush.jpg  
+    - assets/beauty_personal_care/shaving_kit.jpg  
+    - assets/groceries/rice.jpg  
+    - assets/groceries/olive_oil.jpg  
+    - assets/groceries/pasta.jpg  
+    - assets/groceries/honey.jpg  
+    - assets/groceries/spices_set.jpg  
+    - assets/groceries/cereal.jpg  
+    - assets/groceries/canned_beans.jpg  
+    - assets/groceries/cooking_oil.jpg  
+    - assets/groceries/sugar.jpg  
+    - assets/groceries/salt.jpg  
+    - assets/groceries/flour.jpg  
+    - assets/groceries/milk.jpg  
+    - assets/groceries/tea.jpg  
+    - assets/groceries/coffee.jpg  
+    - assets/groceries/chocolate.jpg  
+    - assets/groceries/juice.jpg  
+    - assets/groceries/biscuits.jpg  
+    - assets/groceries/frozen_vegetables.jpg  
+    - assets/groceries/bread.jpg  
+    - assets/groceries/yogurt.jpg

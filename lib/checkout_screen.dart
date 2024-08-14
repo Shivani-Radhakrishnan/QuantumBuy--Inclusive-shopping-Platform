@@ -4,6 +4,8 @@ import 'user_model.dart';
 import 'cart_model.dart';
 
 class CheckoutScreen extends StatefulWidget {
+  const CheckoutScreen({super.key});
+
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
 }
@@ -23,21 +25,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout'),
+        title: const Text('Checkout'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Confirm Delivery Address:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(userModel.address ?? 'No address provided'),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Select Payment Method:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -80,47 +82,47 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             if (_selectedPaymentMethod == 'UPI') ...[
               TextField(
                 controller: _upiController,
-                decoration: InputDecoration(labelText: 'UPI ID'),
+                decoration: const InputDecoration(labelText: 'UPI ID'),
               ),
             ],
             if (_selectedPaymentMethod == 'Card') ...[
               TextField(
                 controller: _cardNumberController,
-                decoration: InputDecoration(labelText: 'Card Number'),
+                decoration: const InputDecoration(labelText: 'Card Number'),
               ),
               TextField(
                 controller: _expiryDateController,
-                decoration: InputDecoration(labelText: 'Expiry Date (MM/YY)'),
+                decoration: const InputDecoration(labelText: 'Expiry Date (MM/YY)'),
               ),
               TextField(
                 controller: _cvvController,
-                decoration: InputDecoration(labelText: 'CVV'),
+                decoration: const InputDecoration(labelText: 'CVV'),
                 obscureText: true,
               ),
             ],
             if (_selectedPaymentMethod == 'Net Banking') ...[
               TextField(
                 controller: _netBankingController,
-                decoration: InputDecoration(labelText: 'Bank Name'),
+                decoration: const InputDecoration(labelText: 'Bank Name'),
               ),
             ],
-            Spacer(),
+            const Spacer(),
             ElevatedButton(
               onPressed: () {
                 if (validatePaymentDetails()) {
                   // Implement the payment process
                   cartModel.clearCart();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Purchase successful')),
+                    const SnackBar(content: Text('Purchase successful')),
                   );
                   Navigator.pushReplacementNamed(context, '/');
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Invalid payment details')),
+                    const SnackBar(content: Text('Invalid payment details')),
                   );
                 }
               },
-              child: Text('Buy Now'),
+              child: const Text('Buy Now'),
             ),
           ],
         ),

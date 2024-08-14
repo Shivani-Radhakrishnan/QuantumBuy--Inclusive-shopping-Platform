@@ -1,50 +1,80 @@
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
+  const CategoriesScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: const Text('Categories'),
       ),
-      body: ListView(
+      body: GridView.count(
+        crossAxisCount: 2, // Number of columns
         children: [
-          ListTile(
-            leading: Icon(Icons.electrical_services),
-            title: Text('Electronics'),
-            onTap: () {
-              Navigator.pushNamed(context, '/productList', arguments: 'Electronics');
-            },
+          _buildCategoryItem(
+            context,
+            Icons.electrical_services,
+            'Electronics',
+            '/productList',
+            'Electronics',
           ),
-          ListTile(
-            leading: Icon(Icons.shopping_bag),
-            title: Text('Clothing and Accessories'),
-            onTap: () {
-              Navigator.pushNamed(context, '/productList', arguments: 'Clothing and Accessories');
-            },
+          _buildCategoryItem(
+            context,
+            Icons.shopping_bag,
+            'Clothing and Accessories',
+            '/productList',
+            'Clothing and Accessories',
           ),
-          ListTile(
-            leading: Icon(Icons.kitchen),
-            title: Text('Home and Kitchen'),
-            onTap: () {
-              Navigator.pushNamed(context, '/productList', arguments: 'Home and Kitchen');
-            },
+          _buildCategoryItem(
+            context,
+            Icons.kitchen,
+            'Home and Kitchen',
+            '/productList',
+            'Home and Kitchen',
           ),
-          ListTile(
-            leading: Icon(Icons.brush),
-            title: Text('Beauty and Personal Care'),
-            onTap: () {
-              Navigator.pushNamed(context, '/productList', arguments: 'Beauty and Personal Care');
-            },
+          _buildCategoryItem(
+            context,
+            Icons.brush,
+            'Beauty and Personal Care',
+            '/productList',
+            'Beauty and Personal Care',
           ),
-          ListTile(
-            leading: Icon(Icons.local_grocery_store),
-            title: Text('Groceries and Gourmet Food'),
-            onTap: () {
-              Navigator.pushNamed(context, '/productList', arguments: 'Groceries and Gourmet Food');
-            },
+          _buildCategoryItem(
+            context,
+            Icons.local_grocery_store,
+            'Groceries and Gourmet Food',
+            '/productList',
+            'Groceries and Gourmet Food',
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCategoryItem(BuildContext context, IconData icon, String label, String route, String arguments) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, route, arguments: arguments);
+      },
+      child: Card(
+        margin: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 80, // Increase the size of the icons
+              color: Theme.of(context).primaryColor,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
       ),
     );
   }

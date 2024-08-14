@@ -4,6 +4,8 @@ import 'cart_model.dart';
 import 'product_model.dart';
 
 class ProductDetailScreen extends StatelessWidget {
+  const ProductDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
@@ -18,17 +20,17 @@ class ProductDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(product.imageUrl),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
               product.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               '₹${product.price.toStringAsFixed(2)}',
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Provider.of<CartModel>(context, listen: false).addItem(product);
@@ -38,7 +40,7 @@ class ProductDetailScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: Text('Add to Cart'),
+              child: const Text('Add to Cart'),
             ),
           ],
         ),
