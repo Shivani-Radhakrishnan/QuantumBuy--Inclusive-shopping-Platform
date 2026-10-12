@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'settings_screen.dart';
-import 'package:flutter_cube/flutter_cube.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

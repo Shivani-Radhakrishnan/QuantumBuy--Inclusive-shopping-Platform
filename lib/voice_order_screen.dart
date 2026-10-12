@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:provider/provider.dart';
 import 'cart_model.dart';
-import 'product_model.dart';
 
 class VoiceOrderScreen extends StatefulWidget {
   const VoiceOrderScreen({super.key});

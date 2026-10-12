@@ -1,11 +1,9 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:palette_generator/palette_generator.dart';
 import 'product_model.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -133,18 +131,20 @@ class ColorAnalyzer {
         }
 
         final Uint8List bytes = byteData.buffer.asUint8List();
-        final img.Image image = img.Image.fromBytes(info.image.width, info.image.height, bytes);
+        // image 4.x API: named arguments, and the raw data from Flutter is RGBA.
+        final img.Image image = img.Image.fromBytes(
+          width: info.image.width,
+          height: info.image.height,
+          bytes: bytes.buffer,
+          numChannels: 4,
+          order: img.ChannelOrder.rgba,
+        );
 
         final Map<Color, List<Offset>> colorPositions = {};
         for (int y = 0; y < image.height; y += 5) { // Sample every 5th pixel for speed
           for (int x = 0; x < image.width; x += 5) {
             final pixel = image.getPixel(x, y);
-            final color = Color.fromARGB(
-              (pixel >> 24) & 0xFF,
-              (pixel >> 16) & 0xFF,
-              (pixel >> 8) & 0xFF,
-              pixel & 0xFF,
-            );
+            final color = Color.fromARGB(pixel.a.toInt(), pixel.r.toInt(), pixel.g.toInt(), pixel.b.toInt());
 
             if (!colorPositions.containsKey(color)) {
               colorPositions[color] = [];
