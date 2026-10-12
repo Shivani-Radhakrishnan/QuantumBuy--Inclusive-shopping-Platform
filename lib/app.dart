@@ -19,9 +19,11 @@ import 'screens/product_detail_screen.dart';
 import 'screens/product_list_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/registration_screen.dart';
+import 'screens/search_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/voice_order_screen.dart';
+import 'services/ml_client.dart';
 import 'services/speaker.dart';
 import 'services/speech_service.dart';
 import 'theme/app_theme.dart';
@@ -33,12 +35,16 @@ class QuantumBuyApp extends StatelessWidget {
     super.key,
     this.speaker,
     this.speech,
+    this.ml,
     this.repository = const ProductRepository(),
     this.initialRoute = Routes.splash,
   });
 
   final Speaker? speaker;
   final SpeechService? speech;
+
+  /// The ML service client; null uses the address from `--dart-define=ML_URL`.
+  final MlClient? ml;
   final ProductRepository repository;
   final String initialRoute;
 
@@ -49,6 +55,7 @@ class QuantumBuyApp extends StatelessWidget {
         Provider<ProductRepository>.value(value: repository),
         Provider<Speaker>(create: (_) => speaker ?? TtsSpeaker()),
         Provider<SpeechService>(create: (_) => speech ?? PlatformSpeechService()),
+        Provider<MlClient>(create: (_) => ml ?? MlClient()),
         ChangeNotifierProvider(create: (_) => CartModel()),
         ChangeNotifierProvider(create: (_) => UserModel()),
         ChangeNotifierProvider(create: (_) => SettingsModel()),
@@ -93,6 +100,8 @@ class QuantumBuyApp extends StatelessWidget {
         if (args is Order) page = OrderConfirmationScreen(order: args);
       case Routes.profile:
         page = const ProfileScreen();
+      case Routes.search:
+        page = SearchScreen(initialQuery: args is String ? args : '');
       case Routes.voiceOrder:
         page = const VoiceOrderScreen();
       case Routes.settings:

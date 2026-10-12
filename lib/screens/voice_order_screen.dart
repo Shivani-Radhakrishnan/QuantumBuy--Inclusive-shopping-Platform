@@ -4,12 +4,17 @@ import 'package:provider/provider.dart';
 import '../data/product_catalog.dart';
 import '../models/cart_model.dart';
 import '../routes.dart';
+import '../services/ml_client.dart';
 import '../services/speaker.dart';
 import '../services/speech_service.dart';
 import '../services/voice_command.dart';
 
-/// Order by voice: "order two laptops", "add rice", "open electronics",
-/// "open my cart". Commands can also be typed.
+/// Order by voice: "order two laptops", "add the cheapest camera", "remove the
+/// rice", "what does the tablet look like", "check out". Commands can also be
+/// typed.
+///
+/// Commands go to the ML service's voice model when it is reachable, and to the
+/// on-device rule parser (add, open a category, open the cart) otherwise.
 class VoiceOrderScreen extends StatefulWidget {
   const VoiceOrderScreen({super.key});
 
@@ -73,21 +78,83 @@ class _VoiceOrderScreenState extends State<VoiceOrderScreen> {
     });
   }
 
+  /// The ML model's answer is used only when it is reasonably sure.
+  static const _minConfidence = 0.5;
+
+  static const _helpText = 'You can say things like: add two laptops, add the cheapest camera, '
+      'remove the rice, what does the tablet look like, find something for dry skin, open groceries, '
+      'show my cart, or check out.';
+
   /// Parses and carries out a spoken or typed command.
-  void _handle(String phrase) {
+  Future<void> _handle(String phrase) async {
     if (phrase.trim().isEmpty) return;
+    setState(() {
+      _heard = phrase;
+      _status = 'Working on it...';
+    });
+    final parsed = await context.read<MlClient>().parseVoice(phrase);
+    if (!mounted) return;
+    if (parsed != null && parsed.confidence >= _minConfidence && _runModelCommand(parsed)) return;
+    _runRuleCommand(phrase);
+  }
+
+  void _say(String message) {
+    setState(() => _status = message);
+    context.read<Speaker>().speak(message);
+  }
+
+  /// Carries out the ML model's reading of the command. Returns false when it
+  /// can't (e.g. no product found), so the rule parser gets a chance.
+  bool _runModelCommand(VoiceIntent v) {
+    final repository = context.read<ProductRepository>();
+    final cart = context.read<CartModel>();
+    final product = v.productId == null ? null : repository.byId(v.productId!);
+    switch (v.intent) {
+      case 'add' when product != null:
+        cart.addItem(product, quantity: v.quantity);
+        _say('Added ${v.quantity} ${product.name} to your cart.');
+      case 'remove' when product != null:
+        if (cart.quantityOf(product) == 0) {
+          _say('${product.name} is not in your cart.');
+        } else {
+          cart.removeAll(product);
+          _say('Removed ${product.name} from your cart.');
+        }
+      case 'describe' when product != null:
+        _say('Opening ${product.name}.');
+        Navigator.pushNamed(context, Routes.productDetail, arguments: product);
+      case 'open_category' when v.category != null && repository.categories.contains(v.category):
+        _say('Opening ${v.category}.');
+        Navigator.pushNamed(context, Routes.productList, arguments: v.category);
+      case 'open_cart':
+        _say('Opening your cart.');
+        Navigator.pushNamed(context, Routes.cart);
+      case 'checkout':
+        if (cart.totalQuantity == 0) {
+          _say('Your cart is empty. Add something first.');
+        } else {
+          _say('Going to checkout.');
+          Navigator.pushNamed(context, Routes.checkout);
+        }
+      case 'search':
+        _say('Searching for ${v.query.isEmpty ? 'that' : v.query}.');
+        Navigator.pushNamed(context, Routes.search, arguments: v.query);
+      case 'help':
+        _say(_helpText);
+      default:
+        return false;
+    }
+    return true;
+  }
+
+  void _runRuleCommand(String phrase) {
     final repository = context.read<ProductRepository>();
     final command = parseVoiceCommand(
       phrase,
       products: repository.allProducts,
       categories: repository.categories,
     );
-    final message = confirmationFor(command);
-    setState(() {
-      _heard = phrase;
-      _status = message;
-    });
-    context.read<Speaker>().speak(message);
+    _say(confirmationFor(command));
 
     switch (command) {
       case AddProductCommand(:final product, :final quantity):
@@ -170,12 +237,16 @@ class _VoiceOrderScreenState extends State<VoiceOrderScreen> {
           const SizedBox(height: 24),
           Text('Try saying', style: theme.textTheme.titleMedium),
           const SizedBox(height: 4),
-          for (final example in const [
+          for (final example in [
             '"Order two laptops"',
             '"Add rice cooker"',
-            '"Buy a smart watch"',
             '"Open groceries"',
             '"Show my cart"',
+            if (context.read<MlClient>().enabled) ...[
+              '"Add the cheapest camera"',
+              '"Remove the rice"',
+              '"Check out"',
+            ],
           ])
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2),

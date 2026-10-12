@@ -76,7 +76,13 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 160),
+                    const SizedBox(height: 120),
+                    _HomeButton(
+                      icon: Icons.search,
+                      label: 'Search',
+                      onPressed: () => Navigator.pushNamed(context, Routes.search),
+                    ),
+                    const SizedBox(height: 20),
                     _HomeButton(
                       icon: Icons.category,
                       label: 'Categories',

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/photo_descriptions.dart';
+import '../data/product_catalog.dart';
 import '../models/cart_model.dart';
 import '../models/product.dart';
 import '../models/settings_model.dart';
 import '../routes.dart';
 import '../services/colour_analysis.dart';
+import '../services/ml_client.dart';
 import '../services/speaker.dart';
 import '../widgets/product_description.dart';
 import '../widgets/product_image.dart';
 import '../widgets/quantity_stepper.dart';
+import '../widgets/recommendation_strip.dart';
 import '../widgets/voice_shortcut_button.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -56,6 +60,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final parts = [
       spokenProductSummary(_product.name, _product.price),
       displayDescription(_product, settings),
+      if (photoDescriptions[_product.imageUrl] case final seen?) 'In the photo: ${seen.replaceAll(RegExp(r'\.$'), '')}',
       if (_colours != null && _colours!.isNotEmpty) 'Main colours: ${_colours!.map((c) => c.name).join(', ')}.',
     ];
     context.read<Speaker>().speak(parts.join('. '));
@@ -72,6 +77,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     if (context.read<SettingsModel>().speaksProductDetails) {
       context.read<Speaker>().speak('${_product.name} added to cart');
     }
+  }
+
+  /// Without the ML service: other products in the same category, closest in price.
+  List<Product> _sameCategory(BuildContext context) {
+    final repo = context.read<ProductRepository>();
+    final category = repo.categoryOf(_product);
+    if (category == null) return const [];
+    final others = repo.productsIn(category).where((p) => p != _product).toList()
+      ..sort((a, b) => (a.price - _product.price).abs().compareTo((b.price - _product.price).abs()));
+    return others.take(5).toList();
   }
 
   @override
@@ -124,6 +139,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           const SizedBox(height: 12),
           ProductDescription(_product, style: theme.textTheme.bodyLarge),
+          if (photoDescriptions[_product.imageUrl] case final seen?) ...[
+            const SizedBox(height: 12),
+            Text('In the photo', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 4),
+            Text(seen, key: const Key('photoDescription'), style: theme.textTheme.bodyLarge),
+          ],
           const SizedBox(height: 16),
           Text('Main colours', style: theme.textTheme.titleMedium),
           const SizedBox(height: 4),
@@ -156,6 +177,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               if (inCart > 0) QuantityStepper(product: _product),
             ],
+          ),
+          RecommendationStrip(
+            key: ValueKey('similar-${_product.id}'),
+            title: 'Similar items',
+            load: () => context.read<MlClient>().similar(_product.id),
+            fallback: () => _sameCategory(context),
+          ),
+          RecommendationStrip(
+            key: ValueKey('together-${_product.id}'),
+            title: 'Often bought together',
+            load: () => context.read<MlClient>().boughtTogether(_product.id),
           ),
         ],
       ),

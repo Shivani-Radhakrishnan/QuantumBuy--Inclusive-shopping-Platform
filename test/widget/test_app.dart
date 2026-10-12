@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shopping_app/app.dart';
 import 'package:shopping_app/models/cart_model.dart';
 import 'package:shopping_app/models/settings_model.dart';
+import 'package:shopping_app/services/ml_client.dart';
 import 'package:shopping_app/services/speaker.dart';
 import 'package:shopping_app/services/speech_service.dart';
 
@@ -60,6 +61,7 @@ Future<FakeSpeaker> pumpApp(
   Map<String, Object> prefs = const {},
   FakeSpeech? speech,
   FakeSpeaker? speaker,
+  MlClient? ml,
   Widget Function(Widget app)? wrap,
 }) async {
   SharedPreferences.setMockInitialValues(prefs);
@@ -68,6 +70,7 @@ Future<FakeSpeaker> pumpApp(
     initialRoute: route,
     speaker: fakeSpeaker,
     speech: speech ?? FakeSpeech(),
+    ml: ml ?? MlClient(baseUrl: ''),
   );
   await tester.pumpWidget(wrap == null ? app : wrap(app));
   // Let saved settings load.

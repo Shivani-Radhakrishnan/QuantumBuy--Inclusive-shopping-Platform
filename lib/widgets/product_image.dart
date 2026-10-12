@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/photo_descriptions.dart';
 import '../models/product.dart';
 import '../models/settings_model.dart';
 
 /// Alt text for a product photo. With the "Alt text for images" setting on,
-/// it includes the product description as well as the name.
-String productAltText(Product product, {required bool detailed}) =>
-    detailed ? 'Photo of ${product.name}. ${product.description}' : 'Photo of ${product.name}';
+/// it says what the photo shows (from [photoDescriptions], written by a
+/// vision-language model) and the product description.
+String productAltText(Product product, {required bool detailed}) {
+  if (!detailed) return 'Photo of ${product.name}';
+  final seen = photoDescriptions[product.imageUrl];
+  return seen == null
+      ? 'Photo of ${product.name}. ${product.description}'
+      : 'Photo of ${product.name}. $seen ${product.description}';
+}
 
 /// A product photo with a screen-reader label.
 ///

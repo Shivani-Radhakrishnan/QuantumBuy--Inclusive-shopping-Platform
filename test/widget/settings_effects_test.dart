@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shopping_app/data/photo_descriptions.dart';
 import 'package:shopping_app/data/product_catalog.dart';
 import 'package:shopping_app/models/settings_model.dart';
 
@@ -51,7 +52,8 @@ void main() {
 
     await settingsOf(tester).toggleAltText(true);
     await tester.pumpAndSettle();
-    expect(find.bySemanticsLabel('Photo of Laptop. ${laptop.description}'), findsOneWidget);
+    expect(find.bySemanticsLabel('Photo of Laptop. ${photoDescriptions[laptop.imageUrl]} ${laptop.description}'),
+        findsOneWidget);
     expect(find.byKey(const Key('altTextCaption')), findsOneWidget);
     handle.dispose();
   });
@@ -73,7 +75,10 @@ void main() {
     expect(speaker.spoken, isNotEmpty);
     expect(speaker.spoken.first, startsWith('Laptop, 50000 rupees'));
 
+    expect(speaker.spoken.first, contains('In the photo: ${photoDescriptions[laptop.imageUrl]!.replaceAll('.', '')}'));
+
     // Cart changes are announced too.
+    await tester.scrollUntilVisible(find.text('Add to cart'), 200, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.text('Add to cart'));
     await tester.pumpAndSettle();
     expect(speaker.spoken.last, 'Laptop added to cart');

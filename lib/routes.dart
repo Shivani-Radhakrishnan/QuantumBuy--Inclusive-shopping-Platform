@@ -11,6 +11,7 @@ abstract final class Routes {
   static const checkout = '/checkout';
   static const orderConfirmation = '/orderConfirmation';
   static const profile = '/profile';
+  static const search = '/search';
   static const voiceOrder = '/voiceOrder';
   static const settings = '/settings';
   static const impairmentSurvey = '/impairment';
