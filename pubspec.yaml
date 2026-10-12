@@ -18,7 +18,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_tts: ^4.0.2
   speech_to_text: ^6.6.2
-
+  flutter_cube: ^0.1.1
+  palette_generator: ^0.3.3
+  image: ^4.5.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -129,3 +132,4 @@ flutter:
     - assets/groceries/frozen_vegetables.jpg  
     - assets/groceries/bread.jpg  
     - assets/groceries/yogurt.jpg
+    - assets/tree.obj

@@ -51,31 +51,35 @@ class CategoriesScreen extends StatelessWidget {
       ),
     );
   }
+Widget _buildCategoryItem(BuildContext context, IconData icon, String label, String route, String arguments) {
+  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  final iconColor = isDarkMode
+      ? Theme.of(context).colorScheme.onPrimary // White or light color for dark mode
+      : Theme.of(context).colorScheme.onSurface; // Dark color for light mode
 
-  Widget _buildCategoryItem(BuildContext context, IconData icon, String label, String route, String arguments) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, route, arguments: arguments);
-      },
-      child: Card(
-        margin: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 80, // Increase the size of the icons
-              color: Theme.of(context).primaryColor,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18),
-            ),
-          ],
-        ),
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, route, arguments: arguments);
+    },
+    child: Card(
+      margin: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 80, // Increase the size of the icons
+            color: iconColor,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

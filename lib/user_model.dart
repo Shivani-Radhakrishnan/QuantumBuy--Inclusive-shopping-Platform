@@ -21,6 +21,8 @@ class UserModel with ChangeNotifier {
   String? get address => _address;
   String? get currentUser => _userName;
 
+  get name => null;
+
   void register(String username, String email, String password) async {
     _userName = username;
     _email = email;

@@ -1,15 +1,18 @@
+
 class Product {
-  final int id;
+  final int id; // Add this field
   final String name;
-  final double price;
   final String imageUrl;
-  int quantity;
+  final double price;
+   int quantity;
+  final String description; // Add this field
 
   Product({
-    required this.id,
+    required this.id, // Initialize this field
     required this.name,
-    required this.price,
     required this.imageUrl,
-    this.quantity = 1,
+    required this.price,
+    this.quantity=1,
+    required this.description, // Initialize this field
   });
 }

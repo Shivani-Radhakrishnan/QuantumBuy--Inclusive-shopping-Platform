@@ -23,111 +23,133 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final userModel = Provider.of<UserModel>(context);
     final cartModel = Provider.of<CartModel>(context);
 
+    // Calculate the total price from the items in the cart
+    double totalPrice = cartModel.items.fold(0, (sum, item) => sum + item.price);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
+        backgroundColor: const Color(0xFFDD8560),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Confirm Delivery Address:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Confirm Delivery Address:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Text(userModel.address ?? 'No address provided'),
+                const SizedBox(height: 20),
+                const Text(
+                  'Select Payment Method:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                _buildPaymentMethodRadio('UPI', 'UPI'),
+                _buildPaymentMethodRadio('Card', 'Credit/Debit Card'),
+                _buildPaymentMethodRadio('Net Banking', 'Net Banking'),
+                const SizedBox(height: 20),
+                _buildPaymentInput(),
+              ],
             ),
-            const SizedBox(height: 10),
-            Text(userModel.address ?? 'No address provided'),
-            const SizedBox(height: 20),
-            const Text(
-              'Select Payment Method:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'TOTAL',
+                  style: TextStyle(color: Colors.white, fontSize: 14, letterSpacing: 3),
+                ),
+                Text(
+                  '₹${totalPrice.toStringAsFixed(2)}',
+                  style: const TextStyle(color: Colors.orange, fontSize: 16, letterSpacing: 3),
+                ),
+              ],
             ),
-            ListTile(
-              title: const Text('UPI'),
-              leading: Radio<String>(
-                value: 'UPI',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (String? value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (validatePaymentDetails()) {
+                cartModel.clearCart();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Purchase successful')),
+                );
+                Navigator.pushReplacementNamed(context, '/');
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Invalid payment details')),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black, backgroundColor: const Color(0xFFDD8560),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
             ),
-            ListTile(
-              title: const Text('Credit/Debit Card'),
-              leading: Radio<String>(
-                value: 'Card',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (String? value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text('Net Banking'),
-              leading: Radio<String>(
-                value: 'Net Banking',
-                groupValue: _selectedPaymentMethod,
-                onChanged: (String? value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-            ),
-            if (_selectedPaymentMethod == 'UPI') ...[
-              TextField(
-                controller: _upiController,
-                decoration: const InputDecoration(labelText: 'UPI ID'),
-              ),
-            ],
-            if (_selectedPaymentMethod == 'Card') ...[
-              TextField(
-                controller: _cardNumberController,
-                decoration: const InputDecoration(labelText: 'Card Number'),
-              ),
-              TextField(
-                controller: _expiryDateController,
-                decoration: const InputDecoration(labelText: 'Expiry Date (MM/YY)'),
-              ),
-              TextField(
-                controller: _cvvController,
-                decoration: const InputDecoration(labelText: 'CVV'),
-                obscureText: true,
-              ),
-            ],
-            if (_selectedPaymentMethod == 'Net Banking') ...[
-              TextField(
-                controller: _netBankingController,
-                decoration: const InputDecoration(labelText: 'Bank Name'),
-              ),
-            ],
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                if (validatePaymentDetails()) {
-                  // Implement the payment process
-                  cartModel.clearCart();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Purchase successful')),
-                  );
-                  Navigator.pushReplacementNamed(context, '/');
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Invalid payment details')),
-                  );
-                }
-              },
-              child: const Text('Buy Now'),
-            ),
-          ],
-        ),
+            child: const Text('Buy Now'),
+          ),
+          const SizedBox(height: 16),
+        ],
       ),
     );
+  }
+
+  Widget _buildPaymentMethodRadio(String value, String title) {
+    return ListTile(
+      title: Text(title),
+      leading: Radio<String>(
+        value: value,
+        groupValue: _selectedPaymentMethod,
+        onChanged: (String? newValue) {
+          setState(() {
+            _selectedPaymentMethod = newValue!;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildPaymentInput() {
+    if (_selectedPaymentMethod == 'UPI') {
+      return TextField(
+        controller: _upiController,
+        decoration: const InputDecoration(labelText: 'UPI ID'),
+      );
+    } else if (_selectedPaymentMethod == 'Card') {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            controller: _cardNumberController,
+            decoration: const InputDecoration(labelText: 'Card Number'),
+          ),
+          TextField(
+            controller: _expiryDateController,
+            decoration: const InputDecoration(labelText: 'Expiry Date (MM/YY)'),
+          ),
+          TextField(
+            controller: _cvvController,
+            decoration: const InputDecoration(labelText: 'CVV'),
+            obscureText: true,
+          ),
+        ],
+      );
+    } else if (_selectedPaymentMethod == 'Net Banking') {
+      return TextField(
+        controller: _netBankingController,
+        decoration: const InputDecoration(labelText: 'Bank Name'),
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   bool validatePaymentDetails() {

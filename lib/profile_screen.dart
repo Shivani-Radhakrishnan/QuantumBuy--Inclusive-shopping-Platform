@@ -50,6 +50,7 @@ class ProfileScreen extends StatelessWidget {
               user.email ?? '',
               style: TextStyle(fontSize: 18, color: Colors.grey[700]),
             ),
+            
             const SizedBox(height: 20),
             Divider(thickness: 1, color: Colors.grey[300]),
             ListTile(
@@ -112,18 +113,26 @@ class ProfileScreen extends StatelessWidget {
             const Spacer(),
             if (user.currentUser != 'Log In to Fill Details') ...[
               ElevatedButton.icon(
-                onPressed: () {
-                  user.logout();
-                  Navigator.pushReplacementNamed(context, '/'); // Navigate to HomeScreen
-                },
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  textStyle: const TextStyle(fontSize: 18),
-                ),
-              ),
+  onPressed: () {
+    user.logout();
+    Navigator.pushReplacementNamed(context, '/'); // Navigate to HomeScreen
+  },
+  icon: const Icon(
+    Icons.logout,
+    color: Colors.white, // Set the icon color to white
+  ),
+  label: const Text(
+    'Logout',
+    style: TextStyle(color: Colors.white), // Set the text color to white
+  ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color.fromARGB(255, 18, 32, 47),
+    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+    textStyle: const TextStyle(fontSize: 18),
+  ),
+),
+
+
             ],
             if (user.currentUser == 'Log In to Fill Details') ...[
               ElevatedButton.icon(
@@ -133,7 +142,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: const Icon(Icons.login),
                 label: const Text('Log In'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: const Color.fromARGB(255, 18, 32, 47),
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   textStyle: const TextStyle(fontSize: 18),
                 ),

@@ -5,6 +5,8 @@ import 'cart_model.dart';
 import 'product_model.dart';
 
 class VoiceOrderScreen extends StatefulWidget {
+  const VoiceOrderScreen({super.key});
+
   @override
   _VoiceOrderScreenState createState() => _VoiceOrderScreenState();
 }
@@ -87,16 +89,16 @@ class _VoiceOrderScreenState extends State<VoiceOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Voice Order'),
+        title: const Text('Voice Order'),
       ),
       body: Column(
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Text(
                 _text,
-                style: TextStyle(fontSize: 24.0),
+                style: const TextStyle(fontSize: 24.0),
               ),
             ),
           ),
@@ -104,7 +106,7 @@ class _VoiceOrderScreenState extends State<VoiceOrderScreen> {
             onPressed: _listen,
             child: Icon(_isListening ? Icons.mic : Icons.mic_none),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             'Confidence: ${(_confidence * 100.0).toStringAsFixed(1)}%',
           ),

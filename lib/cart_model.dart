@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'product_model.dart'; // Ensure this import statement is correct
+import 'package:collection/collection.dart'; //irstWhereOrNull
+
 
 class CartModel extends ChangeNotifier {
   final List<Product> _items = [];
@@ -17,6 +19,7 @@ class CartModel extends ChangeNotifier {
         price: product.price,
         imageUrl: product.imageUrl,
         quantity: 1,
+        description: product.description, // Add this field
       ));
     }
     notifyListeners();
@@ -52,5 +55,8 @@ class CartModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getProductByName(String productName) {}
+  // Find product by name
+  Product? getProductByName(String productName) {
+    return _items.firstWhereOrNull((item) => item.name == productName);
+  }
 }
