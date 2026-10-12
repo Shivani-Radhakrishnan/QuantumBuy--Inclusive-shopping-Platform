@@ -1,0 +1,12 @@
+.git
+build
+.dart_tool
+android
+ios
+linux
+macos
+windows
+web
+test
+docs
+**/__pycache__

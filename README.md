@@ -1,13 +1,15 @@
 # QuantumBuy
 
 [![Flutter](https://github.com/Shivani-Radhakrishnan/QuantumBuy--Inclusive-shopping-Platform/actions/workflows/flutter.yml/badge.svg?branch=main)](https://github.com/Shivani-Radhakrishnan/QuantumBuy--Inclusive-shopping-Platform/actions/workflows/flutter.yml)
+[![ML service](https://github.com/Shivani-Radhakrishnan/QuantumBuy--Inclusive-shopping-Platform/actions/workflows/ml.yml/badge.svg?branch=main)](https://github.com/Shivani-Radhakrishnan/QuantumBuy--Inclusive-shopping-Platform/actions/workflows/ml.yml)
 
 **An accessible shopping app for people with disabilities, built with Flutter.**
 
 QuantumBuy explores what online shopping looks like when accessibility comes first: voice
 ordering with spoken confirmation, high-contrast and large-text modes, image descriptions,
 simplified product text, and help identifying product colours for people with colour blindness.
-It runs on Android, iOS and the web from one Flutter codebase.
+It runs on Android, iOS and the web from one Flutter codebase, with an optional Python ML
+service for search by meaning, recommendations and a trained voice-command model.
 
 <p align="center">
   <img src="docs/demo.gif" width="300" alt="Demo: browsing categories, adding a laptop to the cart, the product page naming its main colours, ordering two headphones by voice command, the cart total, then turning on high contrast, voice control, alt text and simplified text">
@@ -42,6 +44,50 @@ It runs on Android, iOS and the web from one Flutter codebase.
   confirmation and empties the cart.
 - **Accounts.** Local sign-up and login, a profile with phone number, delivery address and photo,
   and log out.
+
+## Machine learning
+
+<p align="center">
+  <img src="docs/screenshots/9-smart-search.jpg" width="26%" alt="Search for 'something to keep my hands warm' returns gloves, hand cream, scarf, jacket and socks">
+  <img src="docs/screenshots/10-recommendations.jpg" width="26%" alt="Coffee maker page: the photo description, similar items and often bought together (biscuits, coffee, sugar, milk)">
+  <img src="docs/screenshots/11-voice-model.jpg" width="26%" alt="Voice order 'add the most expensive camera' adds the Digital Camera">
+</p>
+
+`ml/` is a small Python service (FastAPI, ONNX Runtime, no PyTorch) that the app calls when
+it is configured, and falls back from when it isn't:
+
+| Feature | How | Result (held-out, see [`ml/eval/results/`](ml/eval/results)) |
+|---|---|---|
+| **Search by meaning** ("something to keep my hands warm") | MiniLM sentence embeddings blended with character-trigram BM25 for typos; blend weight tuned on 50 dev queries | 93 hand-labelled test queries: **nDCG@10 0.903** vs 0.432 for keyword BM25; Recall@5 0.928 vs 0.451 |
+| **Voice commands** with 8 intents ("add the cheapest camera", "take the rice out of my basket", "what does the tablet look like", "check out") | Intent classifier (logistic regression on embeddings + TF-IDF) and a token-level slot tagger trained on generated commands; products resolved through the search model, so synonyms work without training data | 150 hand-written test commands fully understood: **88.7%** on first run, 90.7% after two fixes, vs **40.7%** for the app's rule parser (71.8% vs 85.9% on the 3 intents the parser supports) |
+| **Recommendations** ("similar items", "often bought together") | Co-purchase lift blended with content similarity, weighted by how often an item has been bought (cold-start fallback) | Simulated sessions (no real purchase data): with 50 sessions of history, HitRate@5 **0.78** vs 0.62 co-purchase alone and 0.14 popularity; methods converge (~0.92) with 5000 |
+| **Photo descriptions** for blind shoppers ("The tie is maroon with a paisley design.") | SmolVLM-256M run once offline, then a quality gate rejects invented numbers and empty descriptions | 91 of 100 kept; **29 of 30** sampled ones accurate when checked against the photos |
+
+Evaluation details worth knowing:
+
+- Every test set was written before the system it measures was run on it. Tuning (search
+  blend weight, whether photo descriptions go into the index) used only dev data.
+- The voice model's two fixes after the first run were generic: when no product word is
+  tagged, search with the command's content words; and a number right after "the" is not a
+  quantity ("the cheaper of the two mixers"). Both rows are reported.
+- Photo descriptions are spoken and used as alt text but kept out of the search index: on the
+  dev queries they made ranking slightly worse (nDCG@10 0.931 with, 0.935 without).
+- The recommendation data is simulated from shopping "missions", so it shows how the methods
+  behave (the hybrid helps most when history is thin), not real-shop accuracy. With 1000
+  sessions of history, co-purchase alone is slightly better on the few cold items (0.916 vs
+  0.892, n=83).
+
+Run it:
+
+```bash
+cd ml && pip install -r requirements-dev.txt
+uvicorn quantumbuy_ml.api:app --port 8080          # API docs at http://localhost:8080/docs
+flutter run -d chrome --dart-define=ML_URL=http://localhost:8080
+```
+
+or `docker build -t quantumbuy-ml -f ml/Dockerfile . && docker run -p 8080:8080 quantumbuy-ml`.
+Re-run the evaluations with `python -m eval.search_eval`, `eval.voice_eval` and
+`eval.recommend_eval` from `ml/`; the tests check that the published numbers reproduce.
 
 ## Accessibility
 
@@ -96,11 +142,14 @@ lib/
   main.dart, app.dart          entry point; providers, theme and routes
   routes.dart                  route names
   data/product_catalog.dart    ProductRepository: the single source of product data
+  data/photo_descriptions.dart generated: checked photo descriptions
   models/                      CartModel, Order, Product, SettingsModel, UserModel (Provider ChangeNotifiers)
   services/
     speaker.dart               text-to-speech (flutter_tts) behind a Speaker interface
     speech_service.dart        speech recognition (speech_to_text) behind a SpeechService interface
-    voice_command.dart         pure-Dart voice command parser
+    voice_command.dart         pure-Dart voice command parser (fallback when the ML service is off)
+    ml_client.dart             client for the ML service; every call falls back on failure
+    local_search.dart          on-device keyword search (fallback)
     colour_analysis.dart       finds and names an image's main colours
     text_simplifier.dart       simplified product descriptions
   screens/                     one file per screen
@@ -108,6 +157,11 @@ lib/
   theme/app_theme.dart         theme built from the display settings
   utils/validators.dart        form validation (email, phone, UPI, card, expiry, CVV)
 test/                          unit tests; test/widget/ for widget and accessibility tests
+ml/
+  quantumbuy_ml/               encoder (ONNX), search, recommend, voice (intent + slots), FastAPI app
+  eval/                        evaluations and results; voice model training
+  data/                        hand-labelled search queries and voice commands
+  tools/                       photo descriptions (SmolVLM) and their quality gate
 tool/render_frames_test.dart   renders the README screenshots from the real app
 ```
 
