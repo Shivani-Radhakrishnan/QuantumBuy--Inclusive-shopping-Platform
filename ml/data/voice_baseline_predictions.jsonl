@@ -1,0 +1,150 @@
+{"intent": "add", "product": 102, "quantity": 1}
+{"intent": "add", "product": 202, "quantity": 1}
+{"intent": "add", "product": 501, "quantity": 1}
+{"intent": "add", "product": 107, "quantity": 1}
+{"intent": "add", "product": 504, "quantity": 1}
+{"intent": "add", "product": 103, "quantity": 1}
+{"intent": "add", "product": 517, "quantity": 1}
+{"intent": "add", "product": 308, "quantity": 1}
+{"intent": "add", "product": 520, "quantity": 5}
+{"intent": "add", "product": 504, "quantity": 1}
+{"intent": "add", "product": 204, "quantity": 1}
+{"intent": "add", "product": 201, "quantity": 1}
+{"intent": "add", "product": 502, "quantity": 1}
+{"intent": "add", "product": 208, "quantity": 1}
+{"intent": "add", "product": 306, "quantity": 1}
+{"intent": "add", "product": 303, "quantity": 1}
+{"intent": "add", "product": 105, "quantity": 1}
+{"intent": "add", "product": 105, "quantity": 1}
+{"intent": "add", "product": 301, "quantity": 2}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "add", "product": 318, "quantity": 1}
+{"intent": "add", "product": 501, "quantity": 1}
+{"intent": "add", "product": 514, "quantity": 1}
+{"intent": "add", "product": 514, "quantity": 1}
+{"intent": "add", "product": 405, "quantity": 2}
+{"intent": "add", "product": 216, "quantity": 1}
+{"intent": "add", "product": 317, "quantity": 1}
+{"intent": "add", "product": 515, "quantity": 3}
+{"intent": "add", "product": 102, "quantity": 2}
+{"intent": "add", "product": 510, "quantity": 1}
+{"intent": "add", "product": 119, "quantity": 1}
+{"intent": "add", "product": 309, "quantity": 1}
+{"intent": "add", "product": 109, "quantity": 1}
+{"intent": "add", "product": 314, "quantity": 1}
+{"intent": "add", "product": 209, "quantity": 1}
+{"intent": "add", "product": 206, "quantity": 1}
+{"intent": "add", "product": 104, "quantity": 1}
+{"intent": "add", "product": 102, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "add", "product": 411, "quantity": 1}
+{"intent": "add", "product": 412, "quantity": 1}
+{"intent": "add", "product": 416, "quantity": 1}
+{"intent": "add", "product": 401, "quantity": 1}
+{"intent": "add", "product": 319, "quantity": 1}
+{"intent": "add", "product": 312, "quantity": 1}
+{"intent": "add", "product": 307, "quantity": 1}
+{"intent": "add", "product": 113, "quantity": 1}
+{"intent": "add", "product": 106, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "add", "product": 519, "quantity": 1}
+{"intent": "add", "product": 512, "quantity": 1}
+{"intent": "add", "product": 513, "quantity": 1}
+{"intent": "add", "product": 302, "quantity": 1}
+{"intent": "add", "product": 310, "quantity": 1}
+{"intent": "add", "product": 218, "quantity": 1}
+{"intent": "add", "product": 215, "quantity": 1}
+{"intent": "add", "product": 102, "quantity": 1}
+{"intent": "open_cart"}
+{"intent": "add", "product": 504, "quantity": 1}
+{"intent": "add", "product": 103, "quantity": 1}
+{"intent": "add", "product": 501, "quantity": 1}
+{"intent": "add", "product": 308, "quantity": 1}
+{"intent": "add", "product": 204, "quantity": 1}
+{"intent": "add", "product": 306, "quantity": 1}
+{"intent": "add", "product": 517, "quantity": 1}
+{"intent": "add", "product": 104, "quantity": 1}
+{"intent": "add", "product": 208, "quantity": 1}
+{"intent": "add", "product": 318, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "add", "product": 119, "quantity": 1}
+{"intent": "add", "product": 105, "quantity": 1}
+{"intent": "open_category", "category": "Electronics"}
+{"intent": "open_category", "category": "Groceries and Gourmet Food"}
+{"intent": "open_category", "category": "Clothing and Accessories"}
+{"intent": "open_category", "category": "Home and Kitchen"}
+{"intent": "open_category", "category": "Beauty and Personal Care"}
+{"intent": "open_category", "category": "Clothing and Accessories"}
+{"intent": "open_category", "category": "Home and Kitchen"}
+{"intent": "open_category", "category": "Groceries and Gourmet Food"}
+{"intent": "open_category", "category": "Electronics"}
+{"intent": "open_category", "category": "Beauty and Personal Care"}
+{"intent": "open_category", "category": "Clothing and Accessories"}
+{"intent": "open_category", "category": "Electronics"}
+{"intent": "open_category", "category": "Groceries and Gourmet Food"}
+{"intent": "open_category", "category": "Beauty and Personal Care"}
+{"intent": "open_category", "category": "Home and Kitchen"}
+{"intent": "open_cart"}
+{"intent": "open_cart"}
+{"intent": "open_cart"}
+{"intent": "open_cart"}
+{"intent": "open_cart"}
+{"intent": "add", "product": 519, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "open_cart"}
+{"intent": "unknown"}
+{"intent": "open_cart"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "open_cart"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "open_cart"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "open_category", "category": "Clothing and Accessories"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "add", "product": 511, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "add", "product": 205, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "add", "product": 108, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "open_category", "category": "Clothing and Accessories"}
+{"intent": "open_category", "category": "Electronics"}
+{"intent": "add", "product": 105, "quantity": 1}
+{"intent": "add", "product": 102, "quantity": 1}
+{"intent": "add", "product": 108, "quantity": 1}
+{"intent": "add", "product": 214, "quantity": 1}
+{"intent": "add", "product": 106, "quantity": 1}
+{"intent": "add", "product": 308, "quantity": 1}
+{"intent": "add", "product": 104, "quantity": 1}
+{"intent": "add", "product": 309, "quantity": 1}
+{"intent": "add", "product": 209, "quantity": 1}
+{"intent": "add", "product": 206, "quantity": 1}
+{"intent": "add", "product": 402, "quantity": 1}
+{"intent": "add", "product": 103, "quantity": 1}
+{"intent": "add", "product": 502, "quantity": 1}
+{"intent": "add", "product": 213, "quantity": 1}
+{"intent": "add", "product": 105, "quantity": 1}
+{"intent": "add", "product": 501, "quantity": 1}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}
+{"intent": "unknown"}

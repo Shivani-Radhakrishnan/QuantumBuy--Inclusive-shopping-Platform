@@ -1,0 +1,43 @@
+{
+ "intent_accuracy": 0.9333333333333333,
+ "add": {
+  "accuracy": 0.8166666666666667,
+  "n": 60
+ },
+ "all": {
+  "accuracy": 0.8866666666666667,
+  "n": 150
+ },
+ "rule-supported intents": {
+  "accuracy": 0.8588235294117647,
+  "n": 85
+ },
+ "remove": {
+  "accuracy": 0.9333333333333333,
+  "n": 15
+ },
+ "open_category": {
+  "accuracy": 1.0,
+  "n": 15
+ },
+ "open_cart": {
+  "accuracy": 0.9,
+  "n": 10
+ },
+ "checkout": {
+  "accuracy": 0.9,
+  "n": 10
+ },
+ "search": {
+  "accuracy": 1.0,
+  "n": 15
+ },
+ "describe": {
+  "accuracy": 0.9333333333333333,
+  "n": 15
+ },
+ "help": {
+  "accuracy": 0.8,
+  "n": 10
+ }
+}

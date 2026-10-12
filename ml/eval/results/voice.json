@@ -1,0 +1,301 @@
+{
+ "n": 150,
+ "rule parser": {
+  "intent_accuracy": 0.5,
+  "add": {
+   "accuracy": 0.65,
+   "n": 60
+  },
+  "all": {
+   "accuracy": 0.4066666666666667,
+   "n": 150
+  },
+  "rule-supported intents": {
+   "accuracy": 0.7176470588235294,
+   "n": 85
+  },
+  "remove": {
+   "accuracy": 0.0,
+   "n": 15
+  },
+  "open_category": {
+   "accuracy": 1.0,
+   "n": 15
+  },
+  "open_cart": {
+   "accuracy": 0.7,
+   "n": 10
+  },
+  "checkout": {
+   "accuracy": 0.0,
+   "n": 10
+  },
+  "search": {
+   "accuracy": 0.0,
+   "n": 15
+  },
+  "describe": {
+   "accuracy": 0.0,
+   "n": 15
+  },
+  "help": {
+   "accuracy": 0.0,
+   "n": 10
+  }
+ },
+ "voice model": {
+  "intent_accuracy": 0.9333333333333333,
+  "add": {
+   "accuracy": 0.8666666666666667,
+   "n": 60
+  },
+  "all": {
+   "accuracy": 0.9066666666666666,
+   "n": 150
+  },
+  "rule-supported intents": {
+   "accuracy": 0.8941176470588236,
+   "n": 85
+  },
+  "remove": {
+   "accuracy": 0.9333333333333333,
+   "n": 15
+  },
+  "open_category": {
+   "accuracy": 1.0,
+   "n": 15
+  },
+  "open_cart": {
+   "accuracy": 0.9,
+   "n": 10
+  },
+  "checkout": {
+   "accuracy": 0.9,
+   "n": 10
+  },
+  "search": {
+   "accuracy": 1.0,
+   "n": 15
+  },
+  "describe": {
+   "accuracy": 0.9333333333333333,
+   "n": 15
+  },
+  "help": {
+   "accuracy": 0.8,
+   "n": 10
+  }
+ },
+ "errors": [
+  {
+   "text": "put the bluetooth speaker in my basket",
+   "gold": {
+    "intent": "add",
+    "product": "107",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "remove",
+    "product": 107,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "throw a scarf in the cart",
+   "gold": {
+    "intent": "add",
+    "product": "208",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "open_cart",
+    "product": null,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "add a pack of coffee",
+   "gold": {
+    "intent": "add",
+    "product": "514",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "add",
+    "product": 308,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "buy six bottles of juice",
+   "gold": {
+    "intent": "add",
+    "product": "516",
+    "quantity": "6",
+    "category": ""
+   },
+   "pred": {
+    "intent": "add",
+    "product": 317,
+    "quantity": 6,
+    "category": null
+   }
+  },
+  {
+   "text": "add a labtop",
+   "gold": {
+    "intent": "add",
+    "product": "102",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "add",
+    "product": 312,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "order some suncream",
+   "gold": {
+    "intent": "add",
+    "product": "410",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "add",
+    "product": 402,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "i'll take the stand mixer",
+   "gold": {
+    "intent": "add",
+    "product": "319",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "remove",
+    "product": 319,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "get the external drive",
+   "gold": {
+    "intent": "add",
+    "product": "110",
+    "quantity": "1",
+    "category": ""
+   },
+   "pred": {
+    "intent": "remove",
+    "product": 110,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "i changed my mind about the projector",
+   "gold": {
+    "intent": "remove",
+    "product": "119",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "describe",
+    "product": 119,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "what have i added so far",
+   "gold": {
+    "intent": "open_cart",
+    "product": "",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "open_category",
+    "product": null,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "that's all i'm done",
+   "gold": {
+    "intent": "checkout",
+    "product": "",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "help",
+    "product": null,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "how much does a bag of rice cost",
+   "gold": {
+    "intent": "describe",
+    "product": "501",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "add",
+    "product": 501,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "how do i order something",
+   "gold": {
+    "intent": "help",
+    "product": "",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "checkout",
+    "product": null,
+    "quantity": 1,
+    "category": null
+   }
+  },
+  {
+   "text": "can you help me shop",
+   "gold": {
+    "intent": "help",
+    "product": "",
+    "quantity": "",
+    "category": ""
+   },
+   "pred": {
+    "intent": "search",
+    "product": null,
+    "quantity": 1,
+    "category": null
+   }
+  }
+ ]
+}

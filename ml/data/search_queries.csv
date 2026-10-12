@@ -1,0 +1,144 @@
+split,kind,query,relevant
+dev,exact,rice cooker,318
+dev,exact,smart tv,103
+dev,exact,olive oil,502
+dev,exact,face wash,407
+dev,exact,game console,113
+dev,synonym,trainers,206
+dev,synonym,television,103
+dev,synonym,fridge,304
+dev,synonym,cell phone,101
+dev,synonym,notebook computer,102
+dev,synonym,earphones for music,104
+dev,synonym,cologne,403
+dev,synonym,stove,312;320
+dev,synonym,hoover,303
+dev,synonym,lotion for my body,406
+dev,need,i want to make smoothies,306;317
+dev,need,something to brew my morning coffee,308;514
+dev,need,keep my hands warm in winter,216
+dev,need,protect my eyes from the sun,204
+dev,need,clean the floor,303
+dev,need,dry my hair after a shower,405
+dev,need,watch movies at home,103;116;119
+dev,need,store my files and backups,110
+dev,need,bake a cake,313;319;511
+dev,need,keep my skin safe at the beach,410
+dev,need,wash my clothes,314
+dev,need,something sweet to snack on,515;517
+dev,need,make toast for breakfast,307;519
+dev,need,boil water fast,309
+dev,need,track my steps and heart rate,106
+dev,look,pink tablet,108
+dev,look,black headphones,104
+dev,look,silver monitor stand,111
+dev,look,white thermostat,109
+dev,look,blue gloves,216
+dev,misspelling,hedphones,104
+dev,misspelling,refridgerator,304
+dev,misspelling,micowave,305
+dev,misspelling,sunglases,204
+dev,misspelling,shampo,401
+dev,broad,breakfast,506;512;519;520;307;513;514
+dev,broad,skincare,402;406;407;408;410;412;413;417;418
+dev,broad,winter clothing,203;208;209;216
+dev,broad,kitchen appliances,301;305;306;307;308;309;310;312;313;315;316;317;318;319;320
+dev,broad,photography,105;112;115
+dev,broad,formal wear,211;217;219
+dev,broad,baking ingredients,511;509;512
+dev,broad,hair care,401;405;414;419
+dev,broad,smart home devices,109;117;103
+dev,broad,drinks,512;513;514;516
+test,exact,laptop,102
+test,exact,bluetooth speaker,107
+test,exact,electric kettle,309
+test,exact,hand cream,412
+test,exact,frozen vegetables,518
+test,exact,washing machine,314
+test,exact,nail polish,409
+test,exact,stand mixer,319
+test,exact,canned beans,507
+test,exact,raincoat,218
+test,synonym,mobile phone,101
+test,synonym,running shoes,206
+test,synonym,trousers,219
+test,synonym,jumper,209
+test,synonym,necktie,217
+test,synonym,microwave oven,305
+test,synonym,fragrance,403
+test,synonym,moisturiser for my face,402
+test,synonym,cookies,517
+test,synonym,coffee machine,308
+test,synonym,video camera for sports,115
+test,synonym,ipad,108
+test,synonym,hard disk,110
+test,synonym,doorbell camera,117
+test,synonym,toothbrush,120
+test,synonym,pots and pans,302
+test,synonym,razor,420
+test,synonym,trackpants,219
+test,synonym,yoghurt,520
+test,synonym,deo,411
+test,need,something to keep me dry when it rains,218
+test,need,i need to clean my teeth,120
+test,need,see who is at my front door,117
+test,need,play video games,113
+test,need,charge my phone without a cable,114
+test,need,show family photos on a shelf,118
+test,need,give a presentation on a big screen,119
+test,need,listen to music outdoors,107;104
+test,need,clean the air in my bedroom,311
+test,need,make fresh orange juice,317
+test,need,cook rice perfectly,318;501
+test,need,fry chicken until crispy,315;508
+test,need,make soup slowly all day,316
+test,need,wash the dishes for me,310
+test,need,remove my makeup at night,415
+test,need,reduce dark circles under my eyes,408
+test,need,fill in my eyebrows,416
+test,need,make my hair shiny,414;401
+test,need,smell nice all day,403;411
+test,need,exfoliate my skin,417;413
+test,need,season my food,505;510
+test,need,a quick breakfast before work,506;519;520
+test,need,something to sweeten my tea,509;504
+test,need,cook pasta tonight,503;502;302
+test,need,keep my trousers up,213
+test,need,stay warm on a cold day,203;208;209;216
+test,need,something to wear to a wedding,214;211;217
+test,need,comfortable clothes for summer,201;210
+test,need,work clothes for a farm,220
+test,need,cook on a glass top without gas,320;312
+test,need,a big screen for editing photos,111
+test,need,take pictures on holiday,105;112;115;101
+test,need,heat up leftovers,305;313
+test,look,pink lipstick,404
+test,look,brown smartwatch,106
+test,look,red dress,214
+test,look,blue sweater,209
+test,look,black leather belt,213
+test,look,teal kettle,309
+test,look,dark red paisley tie,217
+test,look,white sneakers,206
+test,look,blue t-shirt,201
+test,look,gold face cream jar,402
+test,misspelling,labtop,102
+test,misspelling,smart wach,106
+test,misspelling,vaccum cleaner,303
+test,misspelling,blendr,306
+test,misspelling,perfum,403
+test,misspelling,choclate,515
+test,misspelling,yougurt,520
+test,misspelling,diswasher,310
+test,misspelling,deoderant,411
+test,misspelling,sweter,209
+test,broad,cleaning appliances,303;310;314;311
+test,broad,personal grooming,420;419;405;120
+test,broad,makeup,404;409;416;415
+test,broad,accessories,204;205;207;213;217;208;216
+test,broad,audio equipment,104;107;116
+test,broad,entertainment,103;113;116;119
+test,broad,cooking oils,502;508
+test,broad,snacks,515;517
+test,broad,dairy,512;520
+test,broad,footwear,206;215

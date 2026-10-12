@@ -1,0 +1,4 @@
+-r requirements.txt
+scikit-learn==1.7.2   # training the voice model (eval/voice_train.py)
+httpx==0.28.1         # FastAPI test client
+pytest==9.1.1
