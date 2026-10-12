@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopping_app/user_model.dart';
+import 'package:shopping_app/models/user_model.dart';
 
 Future<UserModel> freshModel([Map<String, Object> stored = const {}]) async {
   SharedPreferences.setMockInitialValues(stored);
@@ -49,5 +49,28 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 50));
     final hashB = (await SharedPreferences.getInstance()).getString('passwordHash');
     expect(hashA, isNot(equals(hashB)));
+  });
+
+  test('logging in starts a session; logging out ends it but keeps the account', () async {
+    final model = await freshModel();
+    await model.register('asha', 'asha@example.com', 'correct horse');
+    expect(model.isLoggedIn, isFalse);
+    expect(model.hasAccount, isTrue);
+    expect(model.authenticate('asha', 'correct horse'), isTrue);
+    expect(model.isLoggedIn, isTrue);
+    model.logout();
+    expect(model.isLoggedIn, isFalse);
+    expect(model.authenticate('asha', 'correct horse'), isTrue, reason: 'account still exists');
+  });
+
+  test('profile updates change only the given fields and are saved', () async {
+    final model = await freshModel();
+    await model.register('asha', 'asha@example.com', 'pw123456');
+    await model.updateProfile(phoneNumber: ' 9876543210 ');
+    await model.updateProfile(address: '1 Example Road, Chennai');
+    expect(model.phoneNumber, '9876543210');
+    expect(model.address, '1 Example Road, Chennai');
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('address'), '1 Example Road, Chennai');
   });
 }

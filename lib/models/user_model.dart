@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The local account (one per device) and the current login session.
 
 class UserModel with ChangeNotifier {
   String? _userName;
@@ -16,78 +17,93 @@ class UserModel with ChangeNotifier {
   String? _phoneNumber;
   String? _address;
 
+  bool _isLoggedIn = false;
+  late final Future<void> _ready;
+
   UserModel() {
-    _loadUserData();
+    _ready = _loadUserData();
   }
+
+  /// Completes once the saved account has been loaded.
+  Future<void> get ready => _ready;
 
   String? get userName => _userName;
   String? get email => _email;
   String? get profilePicture => _profilePicture;
   String? get phoneNumber => _phoneNumber;
   String? get address => _address;
-  String? get currentUser => _userName;
 
-  get name => null;
+  /// Whether someone has logged in during this app session.
+  bool get isLoggedIn => _isLoggedIn;
 
-  void register(String username, String email, String password) async {
-    _userName = username;
-    _email = email;
+  /// Whether an account has been registered on this device.
+  bool get hasAccount => (_passwordHash ?? '').isNotEmpty;
+
+  /// Creates (or replaces) the local account. Does not log in.
+  Future<void> register(String username, String email, String password) async {
+    _userName = username.trim();
+    _email = email.trim();
     _salt = _newSalt();
     _passwordHash = _hashPassword(password, _salt!);
-    await _saveUserData();
+    _isLoggedIn = false;
     notifyListeners();
+    await _saveUserData();
   }
 
   bool authenticate(String username, String password) {
     final hash = _passwordHash;
     final salt = _salt;
     if (hash == null || salt == null || hash.isEmpty) return false;
+    username = username.trim();
+    if (username.isEmpty) return false;
     if ((_userName == username || _email == username) && _constantTimeEquals(_hashPassword(password, salt), hash)) {
+      _isLoggedIn = true;
       notifyListeners();
       return true;
     }
     return false;
   }
 
-  void logout() async {
-    _userName = 'Log In to Fill Details';
-    _email = '';
-    _profilePicture = null;
-    _phoneNumber = null;
-    _address = null;
-    _passwordHash = null;
-    _salt = null;
-    await _saveUserData();
+  /// Ends the session. The account stays on the device so the user can log
+  /// in again.
+  void logout() {
+    if (!_isLoggedIn) return;
+    _isLoggedIn = false;
     notifyListeners();
   }
 
-  void updateProfile(String? profilePicture, String? phoneNumber, String? address) {
-    _profilePicture = profilePicture;
-    _phoneNumber = phoneNumber;
-    _address = address;
-    _saveUserData();
+  Future<void> updateProfile({String? profilePicture, String? phoneNumber, String? address}) async {
+    if (profilePicture != null) _profilePicture = profilePicture;
+    if (phoneNumber != null) _phoneNumber = phoneNumber.trim();
+    if (address != null) _address = address.trim();
     notifyListeners();
+    await _saveUserData();
   }
 
   Future<void> _saveUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userName', _userName ?? '');
-    prefs.setString('email', _email ?? '');
-    prefs.setString('profilePicture', _profilePicture ?? '');
-    prefs.setString('phoneNumber', _phoneNumber ?? '');
-    prefs.setString('address', _address ?? '');
-    prefs.setString('passwordHash', _passwordHash ?? '');
-    prefs.setString('passwordSalt', _salt ?? '');
-    prefs.remove('password'); // older versions stored the password in plain text
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userName', _userName ?? '');
+    await prefs.setString('email', _email ?? '');
+    await prefs.setString('profilePicture', _profilePicture ?? '');
+    await prefs.setString('phoneNumber', _phoneNumber ?? '');
+    await prefs.setString('address', _address ?? '');
+    await prefs.setString('passwordHash', _passwordHash ?? '');
+    await prefs.setString('passwordSalt', _salt ?? '');
+    await prefs.remove('password'); // older versions stored the password in plain text
   }
 
   Future<void> _loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    _userName = prefs.getString('userName');
-    _email = prefs.getString('email');
-    _profilePicture = prefs.getString('profilePicture');
-    _phoneNumber = prefs.getString('phoneNumber');
-    _address = prefs.getString('address');
+    final prefs = await SharedPreferences.getInstance();
+    String? nonEmpty(String key) {
+      final value = prefs.getString(key);
+      return (value == null || value.isEmpty) ? null : value;
+    }
+
+    _userName = nonEmpty('userName');
+    _email = nonEmpty('email');
+    _profilePicture = nonEmpty('profilePicture');
+    _phoneNumber = nonEmpty('phoneNumber');
+    _address = nonEmpty('address');
     _passwordHash = prefs.getString('passwordHash');
     _salt = prefs.getString('passwordSalt');
     // Upgrade data saved by older versions, which kept the password in plain text.
